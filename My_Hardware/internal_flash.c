@@ -28,7 +28,7 @@ HAL_StatusTypeDef IntFlash_ErasePage(uint32_t page_address)
 }
 
 /**
- * @brief 写入一个双字（8字节）到内部 Flash
+ * @brief 在内部 Flash 的 address 地址处写入一个双字（8字节）
  * @param address 目标地址（必须为双字对齐的地址）
  * @param data    要写入的 64 位数据
  */
@@ -172,9 +172,6 @@ HAL_StatusTypeDef IntFlash_UpdateParam(const Param_t *new_param)
         return HAL_ERROR;
     if (memcmp((void *)PARAM_ADDR, &backup, sizeof(Param_t)) != 0)
         return HAL_ERROR;
-        
-    HAL_StatusTypeDef ret = IntFlash_WriteBuffer(PARAM_ADDR, (uint8_t *)&backup, sizeof(Param_t));
-
-    return ret;
+    return HAL_OK;
 }
 

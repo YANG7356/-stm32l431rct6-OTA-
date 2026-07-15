@@ -1,5 +1,5 @@
-#ifndef __BOOTLOADER_H__
-#define __BOOTLOADER_H__
+#ifndef BOOTLOADER_H
+#define BOOTLOADER_H
 
 #include "stm32l4xx_hal.h"
 #include "partition.h"
@@ -8,29 +8,25 @@
 extern "C" {
 #endif
 
-/* Bootloader 主入口 */
-void Bootloader_Main(void);
-
-/* 尝试执行升级流程
- * 返回 HAL_OK: 升级成功
- * 返回 HAL_ERROR/HAL_TIMEOUT: 升级失败
+/* Bootloader 主处理流程：
+ * - 参数区无效则初始化
+ * - 若存在待升级固件则执行升级
+ * - 若 APP 有效则跳转
+ * - 否则停留在 Bootloader
  */
-HAL_StatusTypeDef Bootloader_PerformUpgrade(void);
+void Bootloader_Run(void);
+
+/* 检查 APP 区是否存在有效应用 */
+uint8_t Bootloader_IsAppValid(void);
 
 /* 跳转到 APP */
 void Bootloader_JumpToApp(void);
 
-/* 检查 APP 是否有效 */
-uint8_t Bootloader_IsAppValid(void);
+/* 执行一次 OTA 升级流程 */
+HAL_StatusTypeDef Bootloader_DoUpgrade(void);
 
-/* 读取参数区 */
-HAL_StatusTypeDef Bootloader_ReadParam(Param_t *param);
-
-/* 写回参数区 */
-HAL_StatusTypeDef Bootloader_WriteParam(Param_t *param);
-
-/* 恢复/初始化参数区为默认值 */
-HAL_StatusTypeDef Bootloader_ResetParam(void);
+/* 初始化参数区为默认状态 */
+HAL_StatusTypeDef Bootloader_InitParamArea(void);
 
 #ifdef __cplusplus
 }

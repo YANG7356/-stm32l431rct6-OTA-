@@ -108,14 +108,15 @@ int main(void)
   
   ZD25WQ32_Init(); // 外部Flash初始化
   
+  Bootloader_Run(); 
 
 
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  Test_MultiPage_And_Erase(); // 外部Flash函数测试
-  Test_InternalFlash(); // 内部Flash函数测试  
+//  Test_MultiPage_And_Erase(); // 外部Flash函数测试
+//  Test_InternalFlash(); // 内部Flash函数测试  
   
   while (1)
   {

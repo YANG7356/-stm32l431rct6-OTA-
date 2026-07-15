@@ -1,8 +1,8 @@
 #include "zd25wq32.h"
 
 /* ==================== 内部辅助宏 ==================== */
-#define QSPI_TIMEOUT        2000            // HAL 操作超时时间
-#define WAIT_BUSY_TIMEOUT   1000            // 等待空闲默认超时
+#define QSPI_TIMEOUT        3000            // HAL 操作超时时间
+#define WAIT_BUSY_TIMEOUT   2000            // 等待空闲默认超时
 #define MY_FLASH_PAGE_SIZE  256             // 页大小
 
 /* 命令码 */
@@ -174,7 +174,7 @@ HAL_StatusTypeDef ZD25WQ32_EraseBlock64(uint32_t address)
 }
 
 /**
- * @brief 页编程（0~256 字节），地址与长度不能跨页
+ * @brief 页编程（0~256 字节），地址与长度不能跨页。将 pdata 数组中的数据存放在 zd25wq32 的 address 地址处
  * @param address 写入起始地址（需保证 len 不跨越 256 字节边界）
  * @param pData   数据指针
  * @param size    写入字节数 (1~256)
@@ -210,7 +210,7 @@ HAL_StatusTypeDef ZD25WQ32_WritePage(uint32_t address, uint8_t *pData, uint16_t 
 }
 
 /**
- * @brief 读取任意长度数据（标准读 0x03，最大地址 0x3FFFFF）
+ * @brief 从 zd25wq32 的 address 地址处读取任意长度数据放到 pdata 数组中（标准读 0x03，最大地址 0x3FFFFF）
  * @param address 读取起始地址
  * @param pData   存放数据的缓冲区
  * @param size    读取字节数
