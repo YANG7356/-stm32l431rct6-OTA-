@@ -866,7 +866,7 @@ I (..\My_Hardware\ota_crc.h)(0x6A5639CC)
 I (..\My_Hardware\zd25wq32.h)(0x6A50EEEE)
 I (D:\Keil5\ARM\ARMCC\include\string.h)(0x588B8344)
 F (..\My_Hardware\bootloader.h)(0x6A57062F)()
-F (..\My_Hardware\internal_flash.c)(0x6A573DA3)(--c99 -c --cpu Cortex-M4.fp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32L4xx_HAL_Driver/Inc -I ../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I ../Drivers/CMSIS/Include -I ../My_Hardware-I.\RTE\_Bootloader_project-ID:\Keil5\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include-ID:\Keil5\ARM\PACK\Keil\STM32L4xx_DFP\1.4.0\Device\Include-D__UVISION_VERSION="524" -D_RTE_ -DSTM32L431xx -DUSE_HAL_DRIVER -DSTM32L431xx-o bootloader_project\internal_flash.o --omf_browse bootloader_project\internal_flash.crf --depend bootloader_project\internal_flash.d)
+F (..\My_Hardware\internal_flash.c)(0x6A584DC8)(--c99 -c --cpu Cortex-M4.fp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32L4xx_HAL_Driver/Inc -I ../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I ../Drivers/CMSIS/Include -I ../My_Hardware-I.\RTE\_Bootloader_project-ID:\Keil5\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include-ID:\Keil5\ARM\PACK\Keil\STM32L4xx_DFP\1.4.0\Device\Include-D__UVISION_VERSION="524" -D_RTE_ -DSTM32L431xx -DUSE_HAL_DRIVER -DSTM32L431xx-o bootloader_project\internal_flash.o --omf_browse bootloader_project\internal_flash.crf --depend bootloader_project\internal_flash.d)
 I (..\My_Hardware\internal_flash.h)(0x6A56578A)
 I (../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h)(0x6A256665)
 I (../Core/Inc/stm32l4xx_hal_conf.h)(0x6A559D56)

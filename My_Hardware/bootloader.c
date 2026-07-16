@@ -8,7 +8,7 @@
 typedef void (*pFunction)(void);
 
 /* 内部静态函数声明 */
-static uint8_t Bootloader_IsParamValid(const Param_t *param);
+static uint8_t Bootloader_IsParamValid(const Param_t *param); // 判断参数区的参数是否合法
 static void Bootloader_DeInitBeforeJump(void);
 
 /**
@@ -17,9 +17,9 @@ static void Bootloader_DeInitBeforeJump(void);
  */
 void Bootloader_Run(void)
 {
-    const Param_t *param = (const Param_t *)PARAM_ADDR;
+    const Param_t *param = (const Param_t *)PARAM_ADDR; // 读取参数区的内容
 
-    /* 1. 参数区无效则初始化 */
+    /* 1. 参数区无效则初始化（一般第一次上电时参数区都是无效的） */
     if (!Bootloader_IsParamValid(param))
     {
         if (Bootloader_InitParamArea() != HAL_OK)
@@ -28,13 +28,13 @@ void Bootloader_Run(void)
             return;
         }
 
-        param = (const Param_t *)PARAM_ADDR;
+        param = (const Param_t *)PARAM_ADDR; // 读取初始化后的参数区
     }
 
     /* 2. 若下载完成，执行升级 */
     if (param->status == UPGRADE_STATUS_DOWNLOAD_DONE)
     {
-        if (Bootloader_DoUpgrade() == HAL_OK)
+        if (Bootloader_DoUpgrade() == HAL_OK) //执行OTA升级任务
         {
             /* 升级成功后，如 APP 有效则跳转 */
             if (Bootloader_IsAppValid())
@@ -108,7 +108,7 @@ HAL_StatusTypeDef Bootloader_InitParamArea(void)
  */
 uint8_t Bootloader_IsAppValid(void)
 {
-    uint32_t app_sp    = *(__IO uint32_t *)APP_ADDR;
+    uint32_t app_sp    = *(__IO uint32_t *)APP_ADDR;          //初始化指针
     uint32_t app_reset = *(__IO uint32_t *)(APP_ADDR + 4U);
 
     /* 栈顶是否落在 SRAM 区
@@ -136,16 +136,19 @@ HAL_StatusTypeDef Bootloader_DoUpgrade(void)
     memcpy(&param, (const void *)PARAM_ADDR, sizeof(Param_t));
 
     /* 基本合法性检查 */
-    if (param.magic != PARAM_MAGIC)
+    /* 魔数不对 */
+    if (param.magic != PARAM_MAGIC) 
         return HAL_ERROR;
-
+    
+    /* 无数据或数据超过app区 */
     if (param.fw_size == 0U || param.fw_size > APP_SIZE)
     {
         param.status = UPGRADE_STATUS_UPDATE_FAILED;
         IntFlash_UpdateParam(&param);
         return HAL_ERROR;
     }
-
+    
+    /* 数据超过下载区 */
     if (param.fw_size > DOWNLOAD_CACHE_SIZE)
     {
         param.status = UPGRADE_STATUS_UPDATE_FAILED;
@@ -211,6 +214,7 @@ void Bootloader_JumpToApp(void)
     if (!Bootloader_IsAppValid())
         return;
 
+    /* 关闭systick，清除中断 */
     Bootloader_DeInitBeforeJump();
 
     /* 重定位中断向量表到 APP */

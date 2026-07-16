@@ -131,13 +131,14 @@ HAL_StatusTypeDef IntFlash_WriteAppFromExternal(uint32_t ext_addr, uint32_t size
     if ((ext_addr + size) > EXT_FLASH_SIZE)
         return HAL_ERROR;    
 
+    /* 一次最多写入256字节，分多次写入 */
     while (offset < size)
     {
         uint16_t chunk = (size - offset >= 256) ? 256 : (uint16_t)(size - offset); //如果剩余值大于256，一次搬运chunk=256，否则一次搬运大小为剩余小于256的部分
 
-        if (ZD25WQ32_Read(ext_addr + offset, buf, chunk) != HAL_OK)
+        if (ZD25WQ32_Read(ext_addr + offset, buf, chunk) != HAL_OK) // 将外部Flash ext_addr + offset地址处的数据读入buf
             return HAL_ERROR;
-        if (IntFlash_WriteBuffer(APP_ADDR + offset, buf, chunk) != HAL_OK)
+        if (IntFlash_WriteBuffer(APP_ADDR + offset, buf, chunk) != HAL_OK) // 将buf中的内容写入内部Flash APP_ADDR + offset地址处
             return HAL_ERROR;
         offset += chunk;                     // 每完成一轮搬运，下一次用于zd25wq32的读取地址和内部Flash的写入地址都要偏移chunk
     }
