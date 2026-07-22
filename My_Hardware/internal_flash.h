@@ -4,6 +4,10 @@
 #include "stm32l4xx_hal.h"
 #include "partition.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /* 基础操作 */
 HAL_StatusTypeDef IntFlash_ErasePage(uint32_t page_address);
 HAL_StatusTypeDef IntFlash_WriteDoubleWord(uint32_t address, uint64_t data);
@@ -15,4 +19,8 @@ HAL_StatusTypeDef IntFlash_EraseParamArea(void);
 HAL_StatusTypeDef IntFlash_WriteAppFromExternal(uint32_t ext_addr, uint32_t size);
 HAL_StatusTypeDef IntFlash_UpdateParam(const Param_t *new_param);
 
+#ifdef __cplusplus
+}
 #endif
+
+#endif /* INTERNAL_FLASH_H */
